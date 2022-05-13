@@ -20,7 +20,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: docker-gui-ssh
+  APP_IMAGE_NAME: docker-gui-ssh
   BASE_IMAGE_NAME: docker-gui
   VERSION: latest
 
