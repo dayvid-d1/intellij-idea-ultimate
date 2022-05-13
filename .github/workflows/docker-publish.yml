@@ -17,9 +17,11 @@ on:
 
 env:
   # Use docker.io for Docker Hub if empty
-  REGISTRY: ghcr.io
+  REGISTRY: docker.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: docker-gui-ssh
+  BASE_IMAGE_NAME: docker-gui
+  VERSION: latest
 
 
 jobs:
@@ -52,13 +54,11 @@ jobs:
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
-      - name: Log into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
+      - name: Login to Docker Hub
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -66,18 +66,33 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |            
+            ${{ env.DOCKER_REG }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.BASE_IMAGE_NAME }}:${{ env.VERSION }}
+            ${{ env.DOCKER_REG }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}:${{ env.VERSION }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-      - name: Build and push Docker image
-        id: build-and-push
-        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+      - name: Build Image Base and Push
+        id: docker_build_github_image_base
+        uses: docker/build-push-action@v2
         with:
           context: .
+          builder: ${{ steps.buildx_github.outputs.name }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags:  ${{ env.DOCKER_REG }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.BASE_IMAGE_NAME }}:${{ env.VERSION }}
+          cache-from: type=local,src=/tmp/.buildx-cache-build
+          cache-to: type=local,dest=/tmp/.buildx-cache-push
+
+      - name: Build Image App and Push
+        id: docker_build_github_image_app
+        uses: docker/build-push-action@v2
+        with:
+          context: ./Dockerfile.ssh
+          builder: ${{ steps.buildx_github.outputs.name }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.DOCKER_REG }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}:${{ env.VERSION }}
+          cache-from: type=local,src=/tmp/.buildx-cache-build
+          cache-to: type=local,dest=/tmp/.buildx-cache-push
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
