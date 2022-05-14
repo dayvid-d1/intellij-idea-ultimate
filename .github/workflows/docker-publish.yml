@@ -88,7 +88,8 @@ jobs:
         id: docker_build_github_image_app
         uses: docker/build-push-action@v2
         with:
-          context: ./Dockerfile.ssh
+          context: .
+          file: ./Dockerfile.ssh
           builder: ${{ steps.buildx_github.outputs.name }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}:${{ env.VERSION }}
