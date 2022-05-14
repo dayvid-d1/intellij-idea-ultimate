@@ -109,3 +109,6 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: cosign sign ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}
+      
+      - name: Test image
+        run: docker run --rm -p 5800:5800 -p 5900:5900 -p 22:22 ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}
