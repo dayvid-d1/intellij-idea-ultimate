@@ -91,7 +91,7 @@ jobs:
           context: ./Dockerfile.ssh
           builder: ${{ steps.buildx_github.outputs.name }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRT }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}:${{ env.VERSION }}
+          tags: ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}:${{ env.VERSION }}
           cache-from: type=local,src=/tmp/.buildx-cache-build
           cache-to: type=local,dest=/tmp/.buildx-cache-push
 
