@@ -1,4 +1,5 @@
-FROM docker-gui 
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 
 RUN \
     apt update && \
