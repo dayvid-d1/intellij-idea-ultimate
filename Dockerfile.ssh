@@ -9,6 +9,6 @@ RUN sed -i 's/#*X11Forwarding.*/X11Forwarding yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#*X11UseLocalhost.*/X11UseLocalhost no/' /etc/ssh/sshd_config
 RUN useradd -m testuser -p $(openssl passwd 1234)
 
-EXPOSE 22
+EXPOSE 22 5800 5900
 
 CMD service ssh start ; bash
