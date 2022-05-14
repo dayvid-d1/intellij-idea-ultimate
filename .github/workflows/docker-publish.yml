@@ -90,6 +90,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.ssh
+          build-args: BASE_IMAGE=${{ env.GITHUB_REG }}/${{ github.repository_owner }}/${{ env.BASE_IMAGE_NAME }}:${{ env.VERSION }}
           builder: ${{ steps.buildx_github.outputs.name }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}:${{ env.VERSION }}
