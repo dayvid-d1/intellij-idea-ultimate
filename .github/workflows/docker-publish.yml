@@ -112,8 +112,8 @@ jobs:
       
       - name: Test image
         run: |
-              mkdir -p /mnt/data/downloads/Project
-              mkdir -p /mnt/data/downloads/.Idea
+              sudo mkdir -p /mnt/data/downloads/Project
+              sudo mkdir -p /mnt/data/downloads/.Idea
               docker run --rm \
               -v /mnt/data/downloads/.Idea:/home/developer/.Idea \
               -v /mnt/data/downloads/Project:/home/developer/Project \
