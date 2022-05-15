@@ -8,3 +8,5 @@ done
 /usr/bin/snap $@
 
 chmod +x snap
+
+snap install intellij-idea-ultimate --classic
