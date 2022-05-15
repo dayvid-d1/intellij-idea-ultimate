@@ -13,4 +13,6 @@ RUN \
 
 STOPSIGNAL SIGRTMIN+3
 
-RUN . /usr/local/bin/snap
+RUN \
+  service start snapd && \
+  . /usr/local/bin/snap
