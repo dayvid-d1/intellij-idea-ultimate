@@ -1,2 +1,2 @@
 #!/bin/sh
-intellij-idea-ultimate
+/opt/idea/bin/idea.sh
