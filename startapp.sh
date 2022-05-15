@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/bin/xterm
+intellij-idea-ultimate
