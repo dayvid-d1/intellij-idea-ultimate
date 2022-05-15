@@ -112,18 +112,13 @@ jobs:
       
       - name: Test image
         run: |
-              mkdir -p ~/Project
-              mkdir -p ~/.Idea
+              mkdir -p /mnt/data/downloads/Project
+              mkdir -p /mnt/data/downloads/.Idea
               docker run --rm \
-              -v ~/.Idea:/home/developer/.Idea \
-              -v ~/.Idea.java:/home/developer/.java \
-              -v ~/.Idea.maven:/home/developer/.m2 \
-              -v ~/.Idea.gradle:/home/developer/.gradle \
-              -v ~/.Idea.share:/home/developer/.local/share/JetBrains \
-              -v ~/Project:/home/developer/Project \
+              -v /mnt/data/downloads/.Idea:/home/developer/.Idea \
+              -v /mnt/data/downloads/Project:/home/developer/Project \
               -e UMASK=007 \
               --name idea-$(head -c 4 /dev/urandom | xxd -p)-$(date +'%Y%m%d-%H%M%S') \
-              -p 5800:5800 -p 5900:5900 \
               --net=host \
               ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
           
