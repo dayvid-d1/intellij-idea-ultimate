@@ -121,6 +121,7 @@ jobs:
               -v ~/.Idea.gradle:/home/developer/.gradle \
               -v ~/.Idea.share:/home/developer/.local/share/JetBrains \
               -v ~/Project:/home/developer/Project \
+              -e UMASK=007 \
               --name idea-$(head -c 4 /dev/urandom | xxd -p)-$(date +'%Y%m%d-%H%M%S') \
               -p 5800:5800 -p 5900:5900 \
               ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
