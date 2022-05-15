@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-systemctl start snapd
+systemctl enable snapd
 
 while ! kill -0 $(pidof snapd) 2>/dev/null; do
   echo "Waiting for snapd to start."
