@@ -103,10 +103,18 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-        run: cosign sign ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}
+        run: cosign sign ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
       
       - name: Test image
-        run: docker run --rm -p 5800:5800 -p 5900:5900 ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_IMAGE_NAME }}
+        run: docker run --rm \
+              -v ~/.Idea:/home/developer/.Idea \
+              -v ~/.Idea.java:/home/developer/.java \
+              -v ~/.Idea.maven:/home/developer/.m2 \
+              -v ~/.Idea.gradle:/home/developer/.gradle \
+              -v ~/.Idea.share:/home/developer/.local/share/JetBrains \
+              -v ~/Project:/home/developer/Project \
+              --name idea-$(head -c 4 /dev/urandom | xxd -p)-$(date +'%Y%m%d-%H%M%S') \
+              -p 5800:5800 -p 5900:5900 ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
 
       - name: Move cache
         run: |
