@@ -55,7 +55,7 @@ jobs:
       - name: Cache Github layers
         uses: actions/cache@v2
         env:
-          cache-name: cache-centos7-app
+          cache-name: cache-intellij-app
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ env.cache-name }}-
@@ -89,8 +89,8 @@ jobs:
           builder: ${{ steps.buildx_github.outputs.name }}
           push: ${{ github.event_name != 'pull_request' }}
           tags:  ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-          cache-from: type=local,src=/tmp/.buildx-cache-build
-          cache-to: type=local,dest=/tmp/.buildx-cache-push 
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-build
 
       - name: Move cache
         run: |
