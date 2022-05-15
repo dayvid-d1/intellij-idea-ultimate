@@ -124,6 +124,7 @@ jobs:
               -e UMASK=007 \
               --name idea-$(head -c 4 /dev/urandom | xxd -p)-$(date +'%Y%m%d-%H%M%S') \
               -p 5800:5800 -p 5900:5900 \
+              --net=host \
               ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
           
       - name: Image digest
