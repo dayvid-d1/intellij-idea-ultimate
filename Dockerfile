@@ -3,20 +3,15 @@ FROM  jlesage/baseimage-gui:ubuntu-20.04
 ENV container docker
 ENV PATH /snap/bin:$PATH
 ADD snap /usr/local/bin/snap
+COPY startapp.sh /startapp.sh
+ENV APP_NAME="IntelliJ"
 
 RUN \
   apt update && \
-  apt install -y snapd squashfuse fuse
+  apt install -y snapd squashfuse fuse && \
+  chmod +x snap
 
 RUN systemctl enable snapd
 STOPSIGNAL SIGRTMIN+3
 
-COPY snappy.sh /snappy.sh
-
-RUN . ./snappy.sh
-
-# Copy the start script.
-COPY startapp.sh /startapp.sh
-
-# Set the name of the application.
-ENV APP_NAME="IntelliJ"
+RUN . /usr/local/bin/snap
