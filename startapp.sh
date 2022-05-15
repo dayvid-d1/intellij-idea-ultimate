@@ -1,2 +1,2 @@
 #!/bin/sh
-/opt/idea/bin/idea.sh
+sudo /opt/idea/bin/idea.sh
