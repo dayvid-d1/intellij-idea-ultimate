@@ -9,7 +9,7 @@ ENV APP_NAME="IntelliJ"
 RUN \
   apt update && \
   apt install -y snapd squashfuse fuse && \
-  chmod +x snap
+  chmod +x /usr/local/bin/snap
 
 STOPSIGNAL SIGRTMIN+3
 
