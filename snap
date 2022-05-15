@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+systemctl start snapd
+
 while ! kill -0 $(pidof snapd) 2>/dev/null; do
   echo "Waiting for snapd to start."
   sleep 1
