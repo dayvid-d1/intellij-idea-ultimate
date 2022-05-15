@@ -21,9 +21,9 @@ WORKDIR /opt/idea
 
 RUN curl -fsSL $idea_source -o /opt/idea/installer.tgz \
   && tar --strip-components=1 -xzf installer.tgz \
-  && rm installer.tgz
+  && rm installer.tgz \
+  && mkdir -p /home/developer
 
-USER developer
 ENV HOME /home/developer
 
 RUN mkdir /home/developer/.Idea \
