@@ -11,7 +11,6 @@ RUN \
   apt install -y snapd squashfuse fuse && \
   chmod +x snap
 
-RUN systemctl enable snapd
 STOPSIGNAL SIGRTMIN+3
 
 RUN . /usr/local/bin/snap
