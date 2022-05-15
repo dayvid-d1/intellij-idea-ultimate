@@ -4,7 +4,7 @@ RUN \
   apt update && \
   apt install -y snapd
 
-RUN snap install intellij-idea-ultimate --classic
+CMD snap install intellij-idea-ultimate --classic
 
 # Copy the start script.
 COPY startapp.sh /startapp.sh
