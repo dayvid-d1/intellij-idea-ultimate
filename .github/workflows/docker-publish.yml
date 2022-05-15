@@ -112,7 +112,8 @@ jobs:
       
       - name: Test image
         run: |
-              mkdir -p Project
+              mkdir -p ~/Project
+              mkdir -p ~/.Idea
               docker run --rm \
               -v ~/.Idea:/home/developer/.Idea \
               -v ~/.Idea.java:/home/developer/.java \
