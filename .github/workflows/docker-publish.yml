@@ -90,7 +90,12 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags:  ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           cache-from: type=local,src=/tmp/.buildx-cache-build
-          cache-to: type=local,dest=/tmp/.buildx-cache-push
+          cache-to: type=local,dest=/tmp/.buildx-cache-push 
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-build /tmp/.buildx-cache
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
@@ -106,7 +111,9 @@ jobs:
         run: cosign sign ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
       
       - name: Test image
-        run: docker run --rm \
+        run: |
+              mkdir -p Project
+              docker run --rm \
               -v ~/.Idea:/home/developer/.Idea \
               -v ~/.Idea.java:/home/developer/.java \
               -v ~/.Idea.maven:/home/developer/.m2 \
@@ -114,12 +121,8 @@ jobs:
               -v ~/.Idea.share:/home/developer/.local/share/JetBrains \
               -v ~/Project:/home/developer/Project \
               --name idea-$(head -c 4 /dev/urandom | xxd -p)-$(date +'%Y%m%d-%H%M%S') \
-              -p 5800:5800 -p 5900:5900 ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
-
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-build /tmp/.buildx-cache
+              -p 5800:5800 -p 5900:5900 \
+              ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
           
       - name: Image digest
         run: echo ${{ steps.docker_build_docker.outputs.digest }}
