@@ -11,8 +11,19 @@ RUN  \
   gcc git openssh-client less curl \
   libxtst-dev libxext-dev libxrender-dev libfreetype6-dev \
   libfontconfig1 libgtk2.0-0 libxslt1.1 libxxf86vm1 \
+  openjdk-11-jdk ant \
   && rm -rf /var/lib/apt/lists/* \
   && useradd -ms /bin/bash developer
+
+# Fix certificate issues
+RUN apt-get update && \
+    apt-get install ca-certificates-java && \
+    apt-get clean && \
+    update-ca-certificates -f;
+    
+# Setup JAVA_HOME -- useful for docker commandline
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+RUN export JAVA_HOME
 
 ARG idea_source=https://download.jetbrains.com/idea/ideaIU-${IDEA_BUILD}.tar.gz
 ARG idea_local_dir=.IntelliJIdea${IDEA_VERSION}
