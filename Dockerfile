@@ -15,10 +15,7 @@ RUN  \
   && useradd -ms /bin/bash developer
 
 RUN \
-  apt-get update && apt-get install -y default-jre
-
-RUN \
-  apt-get update && apt-get install -y apt
+  apt-get update && apt-get install -y default-jre apt
 
 # Fix certificate issues
 RUN apt-get update && \
@@ -27,8 +24,11 @@ RUN apt-get update && \
     update-ca-certificates -f;
     
 # Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+RUN export PATH=$JAVA_HOME/bin:$PATH
 RUN export JAVA_HOME
+RUN export JRE_HOME
+RUN export PATH
 
 ARG idea_source=https://download.jetbrains.com/idea/ideaIU-${IDEA_BUILD}.tar.gz
 ARG idea_local_dir=.IntelliJIdea${IDEA_VERSION}
