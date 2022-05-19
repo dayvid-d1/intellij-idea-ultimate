@@ -11,7 +11,7 @@ RUN  \
   gcc git openssh-client less curl \
   libxtst-dev libxext-dev libxrender-dev libfreetype6-dev \
   libfontconfig1 libgtk2.0-0 libxslt1.1 libxxf86vm1 \
-  openjdk-11-jdk ant \
+  default-jre ant \
   && rm -rf /var/lib/apt/lists/* \
   && useradd -ms /bin/bash developer
 
