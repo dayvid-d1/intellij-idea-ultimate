@@ -10,10 +10,15 @@ RUN  \
   apt-get update && apt-get install --no-install-recommends -y \
   gcc git openssh-client less curl \
   libxtst-dev libxext-dev libxrender-dev libfreetype6-dev \
-  libfontconfig1 libgtk2.0-0 libxslt1.1 libxxf86vm1 \
-  default-jre ant \
+  libfontconfig1 libgtk2.0-0 libxslt1.1 libxxf86vm1 \  
   && rm -rf /var/lib/apt/lists/* \
   && useradd -ms /bin/bash developer
+
+RUN \
+  apt-get update && apt-get install -y default-jre
+
+RUN \
+  apt-get update && apt-get install -y apt
 
 # Fix certificate issues
 RUN apt-get update && \
