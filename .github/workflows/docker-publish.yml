@@ -113,7 +113,7 @@ jobs:
       - name: Test image
         run: |
               sudo mkdir -p /mnt/data/downloads/app
-              docker run -rm \
+              docker run --rm \
               -v /mnt/data/downloads/app:/home/developer \
               ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }} \
               bash -c echo "Successfully loaded"
