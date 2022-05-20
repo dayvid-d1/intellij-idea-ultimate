@@ -113,7 +113,7 @@ jobs:
       - name: Test image
         run: |
               sudo mkdir -p /mnt/data/downloads/app
-              docker run \
+              docker run -rm \
               -v /mnt/data/downloads/app:/home/developer \
               --name idea-$(head -c 4 /dev/urandom | xxd -p)-$(date +'%Y%m%d-%H%M%S') \
               -p 5800:5800 -p 5900:5900 \
