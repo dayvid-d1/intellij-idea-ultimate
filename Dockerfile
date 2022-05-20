@@ -39,15 +39,15 @@ ARG idea_source=https://download.jetbrains.com/idea/ideaIU-${IDEA_BUILD}.tar.gz
 ARG idea_local_dir=.IntelliJIdea${IDEA_VERSION}
 
 RUN mkdir -p /home/developer \
-  && chmod 777 /home/developer
+  && chmod 777 /home/developer   
 WORKDIR /home/developer
 
-RUN curl -fsSL $idea_source -o /home/developer/installer.tgz \
+RUN curl -fsSL $idea_source -o /opt/idea/installer.tgz \
   && tar --strip-components=1 -xzf installer.tgz \
-  && rm installer.tgz 
+  && rm installer.tgz && chmod 777 /opt/idea
 
-ENV IDEA_PROPERTIES=//home/developer/bin/idea.properties
-ENV IDE_BIN_HOME=/home/developer/bin/
+ENV IDEA_PROPERTIES=/opt/idea/bin/idea.properties
+ENV IDE_BIN_HOME=/opt/idea/bin
 RUN export IDE_BIN_HOME \
 && export IDEA_PROPERTIES
 
