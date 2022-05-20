@@ -31,8 +31,8 @@ RUN apt-get update && \
 # Setup JAVA_HOME -- useful for docker commandline
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV IDE_BIN_HOME=/opt/idea/bin/
-RUN export PATH=$JAVA_HOME/bin:$PATH
-&& export JAVA_HOME \
+ENV PATH=$JAVA_HOME/bin:$PATH
+RUN export JAVA_HOME \
 && export IDE_BIN_HOME \
 && export JRE_HOME \
 && export PATH
