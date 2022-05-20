@@ -45,7 +45,9 @@ WORKDIR /opt/idea
 RUN curl -fsSL $idea_source -o /opt/idea/installer.tgz \
   && tar --strip-components=1 -xzf installer.tgz \
   && rm installer.tgz \
-  && mkdir -p /home/developer
+  && mkdir -p /home/developer \
+  && chmod 777 /home/developer
+  
 
 ENV HOME /home/developer
 
