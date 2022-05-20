@@ -115,9 +115,8 @@ jobs:
               sudo mkdir -p /mnt/data/downloads/app
               docker run -rm \
               -v /mnt/data/downloads/app:/home/developer \
-              --name idea-$(head -c 4 /dev/urandom | xxd -p)-$(date +'%Y%m%d-%H%M%S') \
-              -p 5800:5800 -p 5900:5900 \
-              ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
+              ${{ env.REGISTRY }}/${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }} \
+              bash -c echo "Successfully loaded"
           
       - name: Image digest
         run: echo ${{ steps.docker_build_docker.outputs.digest }}
