@@ -8,7 +8,7 @@ ARG IDEA_BUILD=2022.1.1
 
 RUN  \
   apt-get update && apt-get install --no-install-recommends -y \
-  gcc git openssh-client less curl \
+  gcc git openssh-client less curl software-properties-common \
   libxtst-dev libxext-dev libxrender-dev libfreetype6-dev \
   libfontconfig1 libgtk2.0-0 libxslt1.1 libxxf86vm1 \  
   && rm -rf /var/lib/apt/lists/* \
