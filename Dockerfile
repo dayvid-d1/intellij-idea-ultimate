@@ -30,10 +30,12 @@ RUN apt-get update && \
     
 # Setup JAVA_HOME -- useful for docker commandline
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV IDE_BIN_HOME=/opt/idea/bin/
 RUN export PATH=$JAVA_HOME/bin:$PATH
-RUN export JAVA_HOME
-RUN export JRE_HOME
-RUN export PATH
+&& export JAVA_HOME \
+&& export IDE_BIN_HOME \
+&& export JRE_HOME \
+&& export PATH
 
 ARG idea_source=https://download.jetbrains.com/idea/ideaIU-${IDEA_BUILD}.tar.gz
 ARG idea_local_dir=.IntelliJIdea${IDEA_VERSION}
