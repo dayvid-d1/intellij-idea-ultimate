@@ -1,4 +1,4 @@
-FROM  jlesage/baseimage-gui:ubuntu-20.04 AS base
+FROM  jlesage/baseimage-gui:alpine-3.15-glibc AS base
 
 COPY startapp.sh /startapp.sh
 ENV APP_NAME="IntelliJ"
